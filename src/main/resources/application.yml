@@ -1,0 +1,12 @@
+server:
+    port: 8082
+
+spring:
+    data:
+        mongodb:
+            username: root
+            password: changemeinprod!
+            host: localhost
+            port: 27017
+            database: youreview
+            authentication-database: admin
