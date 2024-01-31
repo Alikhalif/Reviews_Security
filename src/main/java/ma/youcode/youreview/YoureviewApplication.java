@@ -1,7 +1,9 @@
 package ma.youcode.youreview;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Set;
+import java.util.UUID;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -36,17 +38,17 @@ public class YoureviewApplication {
         return args -> {
 
 			var role1 = Role.builder()
-							.id("1")
+							.id(UUID.randomUUID())
 							.name("ADMIN")
 							.build();
 			var role2 = Role.builder()
-							.id("2")
+							.id(UUID.randomUUID())
 							.name("EDITOR")
 							.build();
             roleRepository.saveAll(Arrays.asList(role1, role2));
 
-			var user = User.builder()
-							.id("1")
+			User user = User.builder()
+							.id(UUID.randomUUID())
 							.userName("hamzaEssouli")
 							.password(passwordEncoder.encode("password"))
 							.roles(Set.of(role1, role2))
@@ -56,8 +58,10 @@ public class YoureviewApplication {
 
 			reviewRepository.save(
 				Review.builder()
-					  .id("1")
-					  .content("ach had service dyal walo")
+					  .id(UUID.randomUUID())
+					  .title("title")
+					  .message("ach had service dyal walo")
+					  .date(LocalDateTime.now())
 					  .author(user)
 					  .build()
 			);

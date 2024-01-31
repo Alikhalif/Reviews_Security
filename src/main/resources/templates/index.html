@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <div th:replace="fragments/head :: head"></div>
+<body>
+    <div th:replace="fragments/header :: header"></div>
+    <div class="container px-6 py-16 mx-auto" style="min-height: calc(100vh - 76px - 74px);">
+        <div class="items-center lg:flex">
+            <div class="w-full lg:w-1/2">
+                <div class="lg:max-w-lg">
+                    <h1 class="text-3xl font-semibold text-gray-800 none:text-white lg:text-4xl">Subscribe To The <span class="text-blue-500">Newsletter</span></h1>
+
+                    <p class="mt-3 text-gray-600 none:text-gray-400">be the first to knows when our <span class="font-medium text-blue-500">Brand</span> is live</p>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-center w-full mt-6 lg:mt-0 lg:w-1/2">
+                <img class="w-full h-full max-w-md" src="https://merakiui.com/images/components/Email-campaign-bro.svg" alt="email illustration vector art">
+            </div>
+        </div>
+    </div>
+    
+    <div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
