@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-    <div th:replace="fragments/head :: head"></div>
+    <div th:replace="~{fragments/head :: head}"></div>
 <body>
-    <div th:replace="fragments/header :: header"></div>
+    <div th:replace="~{fragments/header :: header}"></div>
     <div class="container px-6 py-16 mx-auto" style="min-height: calc(100vh - 76px - 74px);">
         <div class="items-center lg:flex">
             <div class="w-full lg:w-1/2">
@@ -20,6 +20,6 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
         </div>
     </div>
     
-    <div th:replace="fragments/footer :: footer"></div>
+    <div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>

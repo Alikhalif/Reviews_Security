@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import ma.youcode.youreview.models.documents.User;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -23,6 +26,14 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewDto create(ReviewDto reviewDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof User) {
+            User userDetails = (User) authentication.getPrincipal();
+            System.out.println("Authenticated User ID: " + userDetails.getId());
+            reviewDto.setAuthor(userDetails);
+        }
+        reviewDto.setId(UUID.randomUUID());
         Review review = modelMapper.map(reviewDto, Review.class);
         return modelMapper.map(reviewRepository.save(review), ReviewDto.class);
     }

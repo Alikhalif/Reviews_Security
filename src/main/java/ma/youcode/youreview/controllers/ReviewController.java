@@ -2,6 +2,8 @@ package ma.youcode.youreview.controllers;
 
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -10,7 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
 import ma.youcode.youreview.models.dto.ReviewDto;
@@ -18,29 +19,31 @@ import ma.youcode.youreview.services.ReviewService;
 
 @AllArgsConstructor
 
-@RestController
-@RequestMapping("reviews/")
+@Controller
+@RequestMapping("/reviews")
 public class ReviewController {
-    
+
     private ReviewService reviewService;
 
     @GetMapping
     public String index(Model model) {
         model.addAttribute("reviews", reviewService.getAll());
-        return "reviews/index";
+        return "pages/review";
     }
 
     @GetMapping("/add")
     public String add(Model model) {
+        System.out.println("zbi");
         model.addAttribute("newReview", new ReviewDto() );
-        return "review/add";
+        return "pages/addReview";
     }
 
     @PostMapping("/create")
     public String create(@ModelAttribute @Validated ReviewDto reviewDto, BindingResult result) {
         if(!result.hasErrors())
             return "reviews/add?type=add";
-        return "review/add";
+        reviewService.create(reviewDto);
+        return "redirect:/reviews";
     }
 
     @PostMapping("/update/{id}")

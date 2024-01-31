@@ -63,6 +63,7 @@ public class YoureviewApplication {
 					  .message("ach had service dyal walo")
 					  .date(LocalDateTime.now())
 					  .author(user)
+						.reactions(3)
 					  .build()
 			);
 

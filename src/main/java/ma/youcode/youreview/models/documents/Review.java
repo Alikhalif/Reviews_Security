@@ -3,14 +3,13 @@ package ma.youcode.youreview.models.documents;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Builder
@@ -24,6 +23,9 @@ public class Review {
     private String message;
     private LocalDateTime date;
     private Integer reactions;
+
+
+    private Boolean isReported;
 
     @DBRef
     private User author;

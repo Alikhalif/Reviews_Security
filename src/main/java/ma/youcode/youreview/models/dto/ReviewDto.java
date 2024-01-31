@@ -25,7 +25,8 @@ public class ReviewDto {
 
     @NotEmpty
     private String message;
-    private Integer reactions;
+    private LocalDateTime date;
+    private Integer reactions = 1;
 
     @NotNull
     private User author;
