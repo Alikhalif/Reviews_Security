@@ -17,9 +17,9 @@ public class SecurityConfigs {
     @Bean
     SecurityFilterChain defaultFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authRequest -> {
-            authRequest.requestMatchers("/").permitAll();
-            authRequest.requestMatchers("/styles/**").permitAll();
-            authRequest.requestMatchers("/admin/**").hasRole(Roles.ADMIN.name());
+            authRequest.requestMatchers("/", "/styles/**").permitAll();
+            authRequest.requestMatchers("/reviews/report").hasRole(Roles.EDITOR.name());
+            authRequest.requestMatchers("/reviews/reported").hasRole(Roles.ADMIN.name());
             authRequest.anyRequest().authenticated();
         });
         http.cors(AbstractHttpConfigurer::disable);
