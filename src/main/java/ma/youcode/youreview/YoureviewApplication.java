@@ -60,7 +60,7 @@ public class YoureviewApplication {
 				Review.builder()
 					  .id(UUID.randomUUID())
 					  .title("title")
-					  .message("ach had service dyal walo")
+					  .message("message")
 					  .date(LocalDateTime.now())
 					  .author(user)
 						.reactions(3)

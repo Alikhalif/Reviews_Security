@@ -1,11 +1,13 @@
 package ma.youcode.youreview.services.implementations;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
 import ma.youcode.youreview.models.documents.User;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -41,16 +43,18 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public List<ReviewDto> getAll() {
         List<Review> reviews = reviewRepository.findAll();
+
         return reviews.stream()
                 .map(review -> modelMapper.map(review, ReviewDto.class))
                 .toList();
     }
 
+    @PreAuthorize("hasRole(T(ma.youcode.youreview.models.enums.Roles).EDITOR.name())")
     @Override
     public ReviewDto update(UUID uuid, ReviewDto reviewDto) {
         Review review = modelMapper.map(reviewDto, Review.class);
         if (!reviewRepository.existsById(uuid))
-            throw new RuntimeException("test");
+            throw new RuntimeException("test ");
         reviewDto.setId(uuid);
         Optional.ofNullable(review.getTitle()).ifPresent(reviewDto::setTitle);
         Optional.ofNullable(review.getMessage()).ifPresent(reviewDto::setMessage);
@@ -58,11 +62,17 @@ public class ReviewServiceImpl implements ReviewService {
         return modelMapper.map(reviewRepository.save(review), ReviewDto.class);
     }
 
+    //@PreAuthorize("hasRole(T(ma.youcode.youreview.models.enums.Roles).ADMIN.name())")
     @Override
     public void delete(UUID uuid) {
-        if (!reviewRepository.existsById(uuid))
-            throw new RuntimeException("test");
-        reviewRepository.deleteById(uuid);
+        System.out.println("Deleting review with UUID: " + uuid);
+        try {
+            reviewRepository.deleteById(uuid);
+            System.out.println("Review deleted successfully");
+        } catch (NoSuchElementException e) {
+            System.out.println("Review not found with UUID: " + uuid);
+            throw new RuntimeException("Review not found with UUID: " + uuid);
+        }
     }
 
     @Override
