@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,12 +21,9 @@ public class ReviewDto {
 
     @NotEmpty
     private String title;
-
-    @NotEmpty
     private String message;
     private LocalDateTime date;
     private Integer reactions = 1;
 
-    @NotNull
     private User author;
 }

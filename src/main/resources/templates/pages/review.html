@@ -12,6 +12,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
                     <p th:text="${review.message}" class="mt-2 text-sm text-gray-600 none:text-gray-400">Lorem ipsum dolor sit amet consectetur adipisicing elit In odit</p>
 
+                    <p th:text="${review.author.getUsername}">User</p>
+
                     <div class="flex mt-2 item-center">
                         <svg th:each="iteration : ${#numbers.sequence(1, review.reactions)}" class="w-5 h-5 text-gray-700 fill-current none:text-gray-300" viewBox="0 0 24 24">
                             <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" />

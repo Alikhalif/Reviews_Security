@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
+
 @Controller
 public class PageController {
     
@@ -14,4 +15,10 @@ public class PageController {
         model.addAttribute("authenticatedUserName", SecurityContextHolder.getContext().getAuthentication().getName());
         return "index";
     }
+
+    @GetMapping("/404")
+    public String notFound() {
+        return "404";
+    }
+    
 }
