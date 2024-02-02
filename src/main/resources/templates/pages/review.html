@@ -24,6 +24,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     </div>
 
                     <div class="flex justify-between mt-3 item-right">
+                        <a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/reviews/delete/'+${review.id}}" class="btn">delete</a>
+
                         <button sec:authorize="hasAuthority('EDITOR')" class="px-2 py-1 text-xs font-bold text-white uppercase transition-colors duration-300 transform bg-red-500 rounded none:bg-gray-700 hover:bg-red-700 none:hover:bg-gray-600 focus:outline-none focus:bg-gray-700 none:focus:bg-gray-600">Report</button>
                     </div>
                 </div>

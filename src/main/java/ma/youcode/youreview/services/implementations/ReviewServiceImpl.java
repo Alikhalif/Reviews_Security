@@ -1,6 +1,7 @@
 package ma.youcode.youreview.services.implementations;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -60,9 +61,14 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public void delete(UUID uuid) {
-        if (!reviewRepository.existsById(uuid))
-            throw new RuntimeException("test");
-        reviewRepository.deleteById(uuid);
+        System.out.println("Deleting review with UUID: " + uuid);
+        try {
+            reviewRepository.deleteById(uuid);
+            System.out.println("Review deleted successfully");
+        } catch (NoSuchElementException e) {
+            System.out.println("Review not found with UUID: " + uuid);
+            throw new RuntimeException("Review not found with UUID: " + uuid);
+        }
     }
 
     @Override

@@ -2,9 +2,11 @@ package ma.youcode.youreview.controllers;
 
 import java.util.UUID;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,9 +52,15 @@ public class ReviewController {
         return "reviews/index";
     }
 
-    @PostMapping("/delete/{id}")
-    public String delete(@PathVariable  UUID id) {
-        return "reviews/index";
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable  UUID id, Authentication authentication) {
+        System.out.println("oookjkbjhb");
+        if (authentication != null && authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
+            System.out.println("dkhal");
+            reviewService.delete(id);
+            return "redirect:/reviews";
+        }
+        return "redirect:/reviews";
     }
 
     
