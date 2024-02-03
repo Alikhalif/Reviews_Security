@@ -28,7 +28,6 @@ public class ReviewServiceImpl implements ReviewService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof User) {
-            System.out.println("zbi hada");
             User userDetails = (User) authentication.getPrincipal();
             System.out.println("Authenticated User ID: " + userDetails.getId());
             reviewDto.setAuthor(userDetails);
