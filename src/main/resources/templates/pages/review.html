@@ -24,9 +24,48 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     </div>
 
                     <div class="flex justify-between mt-3 item-right">
-                        <a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/reviews/delete/'+${review.id}}" class="btn">delete</a>
+                        <a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/reviews/delete/'+${review.id}}" class="btn">
+                            <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    width="24"
+                                    height="24"
+                            >
+                                <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12"
+                                />
+                            </svg>
+                        </a>
+                        <a th:href="@{'reviews/update/'+${review.id}}">
+                            <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    width="24"
+                                    height="24"
+                            >
+                                <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M15 3a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2h8z"
+                                />
+                                <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M15 3V7a2 2 0 002 2h4M3 21v-4a2 2 0 012-2h12M3 21H7a2 2 0 002-2v-4M3 21l5-5"
+                                />
+                            </svg>
 
-                        <button sec:authorize="hasAuthority('EDITOR')" class="px-2 py-1 text-xs font-bold text-white uppercase transition-colors duration-300 transform bg-red-500 rounded none:bg-gray-700 hover:bg-red-700 none:hover:bg-gray-600 focus:outline-none focus:bg-gray-700 none:focus:bg-gray-600">Report</button>
+                        </a>
+                        <a sec:authorize="hasAuthority('EDITOR')" th:href="@{'reviews/reporte/'+${review.id}}"  class="px-2 py-1 text-xs font-bold text-white uppercase transition-colors duration-300 transform bg-red-500 rounded none:bg-gray-700 hover:bg-red-700 none:hover:bg-gray-600 focus:outline-none focus:bg-gray-700 none:focus:bg-gray-600">Report</a>
                     </div>
                 </div>
             </div>

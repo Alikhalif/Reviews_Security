@@ -45,11 +45,11 @@ public class YoureviewApplication {
 							.id(UUID.randomUUID())
 							.name("EDITOR")
 							.build();
-            roleRepository.saveAll(Arrays.asList(role1, role2));
+            roleRepository.saveAll(Arrays.asList( role2));
 
 			User user = User.builder()
 							.id(UUID.randomUUID())
-							.userName("hamzaEssouli")
+							.userName("abdelali")
 							.password(passwordEncoder.encode("password"))
 							.roles(Set.of(role1, role2))
 							.build();
@@ -60,10 +60,11 @@ public class YoureviewApplication {
 				Review.builder()
 					  .id(UUID.randomUUID())
 					  .title("title")
-					  .message("ach had service dyal walo")
+					  .message("description")
 					  .date(LocalDateTime.now())
 					  .author(user)
 						.reactions(3)
+						.isReported(true)
 					  .build()
 			);
 

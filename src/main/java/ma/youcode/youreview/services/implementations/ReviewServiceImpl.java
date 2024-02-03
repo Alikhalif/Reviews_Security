@@ -1,12 +1,10 @@
 package ma.youcode.youreview.services.implementations;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import ma.youcode.youreview.models.documents.User;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -30,10 +28,12 @@ public class ReviewServiceImpl implements ReviewService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof User) {
+            System.out.println("zbi hada");
             User userDetails = (User) authentication.getPrincipal();
             System.out.println("Authenticated User ID: " + userDetails.getId());
             reviewDto.setAuthor(userDetails);
         }
+        reviewDto.setReported(false);
         reviewDto.setId(UUID.randomUUID());
         Review review = modelMapper.map(reviewDto, Review.class);
         return modelMapper.map(reviewRepository.save(review), ReviewDto.class);
@@ -49,14 +49,16 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewDto update(UUID uuid, ReviewDto reviewDto) {
-        Review review = modelMapper.map(reviewDto, Review.class);
-        if (!reviewRepository.existsById(uuid))
-            throw new RuntimeException("test");
-        reviewDto.setId(uuid);
-        Optional.ofNullable(review.getTitle()).ifPresent(reviewDto::setTitle);
-        Optional.ofNullable(review.getMessage()).ifPresent(reviewDto::setMessage);
-        Optional.ofNullable(review.getReactions()).ifPresent(reviewDto::setReactions);
-        return modelMapper.map(reviewRepository.save(review), ReviewDto.class);
+        Optional<Review> optionalReview = reviewRepository.findById(uuid);
+
+
+
+        Review existingReview = optionalReview.get();
+        existingReview.setTitle(reviewDto.getTitle());
+        existingReview.setMessage(reviewDto.getMessage());
+        existingReview.setReactions(reviewDto.getReactions());
+        Review updatedReview = reviewRepository.save(existingReview);
+        return modelMapper.map(updatedReview, ReviewDto.class);
     }
 
     @Override
@@ -76,5 +78,22 @@ public class ReviewServiceImpl implements ReviewService {
         Review review = reviewRepository.findById(uuid)
                 .orElseThrow(() -> new RuntimeException("test"));
         return modelMapper.map(review, ReviewDto.class);
+    }
+
+    @Override
+    public ReviewDto reporte(UUID uuid){
+        Optional<Review> optionalReview = reviewRepository.findById(uuid);
+
+        System.out.println(optionalReview);
+        Review existingReview = optionalReview.get();
+        System.out.println(existingReview);
+        existingReview.setReported(true);
+        Review updatedReview = reviewRepository.save(existingReview);
+        return modelMapper.map(updatedReview, ReviewDto.class);
+    }
+
+    @Override
+    public List<ReviewDto> getReportedReviews() {
+        return Arrays.asList( modelMapper.map(reviewRepository.findAllByIsReported(true), ReviewDto[].class));
     }
 }

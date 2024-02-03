@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div th:replace="~{fragments/head :: head}"></div>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="container px-6 py-16 mx-auto overflow-y-scroll flex flex-wrap gap-4" style="min-height: calc(100vh - 76px - 74px);">
+    <h2>Reported Reviews</h2>
+    <div th:each="review : ${reportedReviews}" class="flex border border-blue-200 overflow-hidden bg-white rounded-lg shadow-lg none:bg-gray-800">
+        <div class="w-2/3 p-4 md:p-4">
+            <h1 th:text="${review.title}" class="text-xl font-bold text-gray-800 none:text-white">Backpack</h1>
+
+            <p th:text="${review.message}" class="mt-2 text-sm text-gray-600 none:text-gray-400">Lorem ipsum dolor sit amet consectetur adipisicing elit In odit</p>
+
+            <p th:text="${review.author.getUsername}">User</p>
+
+            <div class="flex mt-2 item-center">
+                <svg th:each="iteration : ${#numbers.sequence(1, review.reactions)}" class="w-5 h-5 text-gray-700 fill-current none:text-gray-300" viewBox="0 0 24 24">
+                    <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" />
+                </svg>
+                <svg th:if="${review.reactions < 5}" th:each="iteration : ${#numbers.sequence(1,5 - review.reactions)}" class="w-5 h-5 text-gray-500 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" />
+                </svg>
+            </div>
+
+            <div class="flex justify-between mt-3 item-right">
+                <a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/reviews/delete/'+${review.id}}" class="btn">
+                    <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            width="24"
+                            height="24"
+                    >
+                        <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"
+                        />
+                    </svg>
+                </a>
+                <a th:href="@{'reviews/update/'+${review.id}}">
+                    <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            width="24"
+                            height="24"
+                    >
+                        <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 3a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2h8z"
+                        />
+                        <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 3V7a2 2 0 002 2h4M3 21v-4a2 2 0 012-2h12M3 21H7a2 2 0 002-2v-4M3 21l5-5"
+                        />
+                    </svg>
+
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

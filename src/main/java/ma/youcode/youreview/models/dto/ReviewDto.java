@@ -24,6 +24,7 @@ public class ReviewDto {
     private String message;
     private LocalDateTime date;
     private Integer reactions = 1;
+    private boolean isReported;
 
     private User author;
 }

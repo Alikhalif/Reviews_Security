@@ -46,21 +46,40 @@ public class ReviewController {
         return "redirect:/reviews";
     }
 
+    @GetMapping("/update/{id}")
+    public String update(@PathVariable UUID id, Model model) {
+        System.out.println("ok ------- ");
+        ReviewDto reviewDto = reviewService.findByID(id);
+        model.addAttribute("review", reviewDto);
+        return "pages/updateReview";
+    }
+
     @PostMapping("/update/{id}")
     public String update(@PathVariable UUID id, @ModelAttribute @Validated ReviewDto reviewDto, Model model) {
-        
-        return "reviews/index";
+        reviewService.update(id,reviewDto);
+        return "redirect:/reviews";
     }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable  UUID id, Authentication authentication) {
-        System.out.println("oookjkbjhb");
         if (authentication != null && authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
             System.out.println("dkhal");
             reviewService.delete(id);
             return "redirect:/reviews";
         }
         return "redirect:/reviews";
+    }
+
+    @GetMapping("/reporte/{id}")
+    public String report(@PathVariable UUID id) {
+        reviewService.reporte(id);
+        return "redirect:/reviews";
+    }
+
+    @GetMapping("/reportes")
+    public String reportedReviews(Model model) {
+        model.addAttribute("reportedReviews", reviewService.getReportedReviews());
+        return "pages/reportedReviews";
     }
 
     

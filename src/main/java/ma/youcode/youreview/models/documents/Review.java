@@ -7,6 +7,7 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,9 +24,7 @@ public class Review {
     private String message;
     private LocalDateTime date;
     private Integer reactions;
-
-
-    private Boolean isReported;
+    private boolean isReported;
 
     @DBRef
     private User author;

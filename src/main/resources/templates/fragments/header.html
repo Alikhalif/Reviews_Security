@@ -7,7 +7,7 @@
     
             <a th:href="@{reviews/add}" class="border-b-2 border-transparent hover:text-gray-800 transition-colors duration-300 transform none:hover:text-gray-200 hover:border-blue-500 mx-1.5 sm:mx-6" sec:authorize="isAuthenticated()">Add review</a>
 
-            <a th:href="@{/reports}" sec:authorize="hasAnyRole('ADMIN', 'EDITOR')" class="border-b-2 border-transparent hover:text-gray-800 transition-colors duration-300 transform none:hover:text-gray-200 hover:border-blue-500 mx-1.5 sm:mx-6">reported reviews</a>
+            <a th:href="@{/reportes}" sec:authorize="hasAnyRole('ADMIN')" class="border-b-2 border-transparent hover:text-gray-800 transition-colors duration-300 transform none:hover:text-gray-200 hover:border-blue-500 mx-1.5 sm:mx-6">reported reviews</a>
 
             <a th:href="@{/login}" sec:authorize="!isAuthenticated()"  class="border-b-2 border-transparent hover:text-gray-800 transition-colors duration-300 transform none:hover:text-gray-200 hover:border-blue-500 mx-1.5 sm:mx-6" >
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="25" height="25" viewBox="0 0 256 256" xml:space="preserve">

@@ -12,4 +12,6 @@ public interface ReviewService {
     ReviewDto findByID(UUID uuid);
     ReviewDto update(UUID uuid, ReviewDto reviewDto); 
     void delete(UUID uuid);
+    ReviewDto reporte(UUID uuid);
+    List<ReviewDto> getReportedReviews();
 }
